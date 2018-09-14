@@ -11,6 +11,14 @@ import java.util.stream.Collectors;
 @Log4j2
 public class StepFactory {
 
+
+    /**
+     *
+     * @param clzz
+     * @param driver
+     * @param <T>
+     * @return
+     */
     public static <T> T create(Class<T> clzz, WebDriver driver) {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(clzz);

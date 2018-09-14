@@ -6,16 +6,28 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Optional;
+
 public abstract class BaseProgram {
 
 
     public static int explicit_timeout = 30;
     protected final WebDriver webDriver;
 
+
+    /**
+     *
+     * @param webDriver
+     */
     public BaseProgram(WebDriver webDriver) {
         this.webDriver = webDriver;
     }
 
+    /**
+     *
+     * @param by
+     * @return
+     */
     public boolean isDisplayed(By by) {
         if (by == null) {
             return false;
@@ -29,10 +41,10 @@ public abstract class BaseProgram {
         }
     }
 
-    public WebElement get(By by) {
-
-        WebDriverWait webDriverWait = new WebDriverWait(webDriver, explicit_timeout);
-        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(by));
-        return webDriver.findElement(by);
+    public Optional<WebElement> get(By by) {
+        if (isDisplayed(by)) {
+            return Optional.of(webDriver.findElement(by));
+        }
+        return Optional.empty();
     }
 }

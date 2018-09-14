@@ -23,6 +23,10 @@ public abstract class BaseSteps {
     protected final WebDriver driver;
 
 
+    /**
+     *
+     * @param webDriver
+     */
     protected BaseSteps(WebDriver webDriver) {
         this.driver = webDriver;
         for (Class<?> c = getClass(); c != null; c = c.getSuperclass()) {
@@ -47,6 +51,11 @@ public abstract class BaseSteps {
         }
     }
 
+    /**
+     *
+     * @param webElement
+     * @return
+     */
     public boolean isDisplayed(WebElement webElement) {
         if (webElement == null) {
             return false;
@@ -60,6 +69,11 @@ public abstract class BaseSteps {
         }
     }
 
+    /**
+     *
+     * @param webElement
+     * @return
+     */
     protected boolean isNotDisplayed(WebElement webElement) {
         try {
 
@@ -72,6 +86,11 @@ public abstract class BaseSteps {
     }
 
 
+    /**
+     *
+     * @param webElement
+     * @return
+     */
     protected String read(WebElement webElement) {
         String text;
 
@@ -100,17 +119,32 @@ public abstract class BaseSteps {
         return "";
     }
 
+    /**
+     *
+     * @param webElement
+     * @param value
+     */
     protected void write(WebElement webElement, int value) {
         write(webElement, String.valueOf(value));
     }
 
 
+    /**
+     *
+     * @param webElement
+     * @param message
+     */
     protected void write(WebElement webElement, String message) {
 
        sendKeys(webElement, message);
 
     }
 
+    /**
+     *
+     * @param webElement
+     * @param message
+     */
     protected void sendKeys(WebElement webElement, String message) {
 
         new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.visibilityOf(webElement));
@@ -120,6 +154,10 @@ public abstract class BaseSteps {
     }
 
 
+    /**
+     *
+     * @param webElement
+     */
     protected void clickOn(WebElement webElement) {
         new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.visibilityOf(webElement));
         new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.elementToBeClickable(webElement));
@@ -128,6 +166,10 @@ public abstract class BaseSteps {
 
     }
 
+    /**
+     *
+     * @param webElement
+     */
     protected void clickAndClose(WebElement webElement) {
         clickOn(webElement);
 
@@ -136,6 +178,11 @@ public abstract class BaseSteps {
     }
 
 
+    /**
+     *
+     * @param element
+     * @param color
+     */
     private void highlightElement(WebElement element, String color) {
         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
         if (previousHighlightedElement != null) {
@@ -155,11 +202,33 @@ public abstract class BaseSteps {
 
     }
 
+
+    /**
+     *
+     * @param webElement
+     */
     protected void rightClickOn(WebElement webElement) {
-        new Actions(driver).contextClick(webElement).build().perform();
+        new Actions(driver).contextClick(webElement).perform();
     }
 
 
+    /**
+     *
+     * @param webElement
+     */
+    protected void doubleClick(WebElement webElement){
+        new Actions(driver).doubleClick(webElement).perform();
+    }
+
+    /**
+     *
+     * @param webElement
+     */
+    protected void executeJavascriptClick(WebElement webElement){
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        executor.executeScript("arguments[0].click();", webElement);
+
+    }
 }
 
 
