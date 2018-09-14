@@ -1,0 +1,35 @@
+### Eclipse
+.project
+.classpath
+.settings/
+.worksheet/
+bin/
+
+### IDEA
+*.iml
+*.ipr
+*.iws
+*.ids
+out/
+.idea/
+
+### Maven
+target/
+test-output/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+release.properties
+
+### Gradle
+.gradle
+build
+
+### JRebel
+rebel.xml
+
+### Other
+.cache
+.tmp
+*.csv
+transactions
