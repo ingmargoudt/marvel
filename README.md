@@ -14,7 +14,7 @@ Marvel
 # Datadriven, rather than Gherkin
 The marvel toolkit is designed to help you create your tests datadriven. To my belief the quality and specifcation 
 of testdata is the 'engine' behind every test. Marvel brings business logic right where it belongs: not in the test, but in the business-layer. 
-This means that your test does not define what is to be tested, but your testdata defines which paths through your business-flows are taken.
+This means that your test does not define how a feature is to be tested, but your testdata defines which paths through your business-flows are taken.
 Be aware, BDD is a collaboration methodology, it is not a testing tool. 
 
 Will a gherkin language as Cucumber or JBehave be supported? 
