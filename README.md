@@ -38,7 +38,7 @@ Oh, and you don't need to use any constructors: all your steps and programs can 
 as it will log every step and arguments used, to help you tracing down your tests.
 
 # Is marvel applicable for my project?
-That is entirely up to you. There is no tool, no library, no framework that can do it all for you. A tool is just one thing contributing to successful automation. Based on your requirements, technical, functional or communication, select what is best for you. 
+That is entirely up to you. There is no tool, no library, no framework that can do it all for you. A tool is just one thing contributing to successful automation. Based on your requirements, technical, functional or communication, select what is best for you. Though, the way of working with marvel might surprise you.
 
 # When will there be a first RC?
 Updates to the basics of marvel are still being pushed, you will read updates on this github. Releases will be pushed to the Maven repositories.
