@@ -30,7 +30,6 @@ public abstract class TestExecution {
     public WebDriver webDriver;
     public boolean noBrowser;
     protected String baseURL;
-    private static final String chromeDriverSystemvariable = "webdriver.chrome.driver";
 
     protected TestExecution() {
 
@@ -51,10 +50,6 @@ public abstract class TestExecution {
         }
     }
 
-    protected void initializeWebDriver(){}
-
-
-
     protected void close() {
         if (webDriver != null) {
             webDriver.quit();
@@ -63,11 +58,11 @@ public abstract class TestExecution {
         logger.info("-------------------------------------------------------");
     }
 
-    protected void takeScreenshot(TestInfo testInfo) {
+    protected void takeScreenshot() {
         File screenshotAs = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
         try {
-            Files.copy(screenshotAs.toPath(), Paths.get("target/" + testInfo.getDisplayName() + ".png"), StandardCopyOption.REPLACE_EXISTING);
-            logger.info("screenshot saved to target/" + testInfo.getDisplayName() + ".png");
+            Files.copy(screenshotAs.toPath(), Paths.get("target/" + getClass().getSimpleName() + ".png"), StandardCopyOption.REPLACE_EXISTING);
+            logger.info("screenshot saved to target/" + getClass().getSimpleName() + ".png");
         } catch (IOException e) {
             logger.info("error during copying screenshot");
             e.printStackTrace();
