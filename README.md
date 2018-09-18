@@ -8,7 +8,7 @@ primarily designed to support testing of end-to-end (business) processes.
 # What can marvel do for me?
 Marvel 
 * automatically logs of your teststeps
-* manages your webdriver
+* manages your webdriver (Thanks to Bonigarcia's WebDriverManager library)
 * provides ways to keep your code well-structured and clean 
 
 # Datadriven, rather than Gherkin
