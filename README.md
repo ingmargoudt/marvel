@@ -14,7 +14,7 @@ Marvel
 # Datadriven, rather than Gherkin
 The marvel toolkit is designed to help you create your tests datadriven. To my belief the quality and specifcation 
 of testdata is the 'engine' behind every test. Marvel brings business logic right where it belongs: not in the test, but in the business-layer. 
-This means that your test does not define what is to be tested, but your testdata defines which paths through your business-flows are taken.
+This means that your test does not define how a feature is to be tested, but your testdata defines which paths through your business-flows are taken.
 Be aware, BDD is a collaboration methodology, it is not a testing tool. 
 
 Will a gherkin language as Cucumber or JBehave be supported? 
@@ -36,3 +36,9 @@ an API to safely interact with webelements, using explicit waits, and supports b
 
 Oh, and you don't need to use any constructors: all your steps and programs can be injected by an annotation. Marvel will also assist  you with logging
 as it will log every step and arguments used, to help you tracing down your tests.
+
+# Is marvel applicable for my project?
+That is entirely up to you. There is no tool, no library, no framework that can do it all for you. A tool is just one thing contributing to successful automation. Based on your requirements, technical, functional or communication, select what is best for you. Though, the way of working with marvel might surprise you.
+
+# When will there be a first RC?
+Updates to the basics of marvel are still being pushed, you will read updates on this github. Releases will be pushed to the Maven repositories.
