@@ -145,7 +145,7 @@ public abstract class BaseSteps {
      * @param webElement
      * @param message
      */
-    protected void sendKeys(WebElement webElement, String message) {
+    protected void sendKeys(WebElement webElement, CharSequence message) {
 
         new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.visibilityOf(webElement));
         new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.elementToBeClickable(webElement));
