@@ -16,8 +16,8 @@ public abstract class Flow {
     }
 
     public Flow(WebDriver webDriver) {
-        this();
         this.webDriver = webDriver;
+        getSteps();
     }
 
     protected void getSteps() {
@@ -34,4 +34,6 @@ public abstract class Flow {
             }
         }
     }
+
+    public abstract  void run();
 }
