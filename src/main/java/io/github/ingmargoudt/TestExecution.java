@@ -1,5 +1,6 @@
 package io.github.ingmargoudt;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.assertj.core.api.Fail;
@@ -40,11 +41,7 @@ public abstract class TestExecution {
         }
 
         if (!noBrowser) {
-            String path = System.getProperty(chromeDriverSystemvariable);
-            if (path == null) {
-                Fail.fail(chromeDriverSystemvariable+" is not set, check your pom.xml or the config.json");
-            }
-            logger.info("starting " + System.getProperty(chromeDriverSystemvariable));
+            WebDriverManager.chromedriver().setup();
 
             ChromeOptions options = new ChromeOptions();
             options.addArguments("start-maximized");
