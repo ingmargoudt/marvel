@@ -3,12 +3,7 @@ package io.github.ingmargoudt;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.assertj.core.api.Fail;
 import org.joda.time.DateTime;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInfo;
-import org.junit.platform.engine.TestExecutionResult;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -59,6 +54,10 @@ public abstract class TestExecution {
     }
 
     protected void takeScreenshot() {
+        if (webDriver == null) {
+            logger.warn("Cant make a screenshot , webdriver == null");
+            return;
+        }
         File screenshotAs = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
         try {
             Files.copy(screenshotAs.toPath(), Paths.get("target/" + getClass().getSimpleName() + ".png"), StandardCopyOption.REPLACE_EXISTING);
@@ -70,6 +69,10 @@ public abstract class TestExecution {
     }
 
     protected void dumpDOM() {
+        if (webDriver == null) {
+            logger.warn("DOM can not be saved, webDriver == null");
+            return;
+        }
         try {
             Path temp = Files.createFile(Paths.get("target/" + this.getClass().getSimpleName() + "_" + DateTime.now().getMillis() + "_DOM.txt"));
             BufferedWriter bw = new BufferedWriter(new FileWriter(temp.toFile()));
