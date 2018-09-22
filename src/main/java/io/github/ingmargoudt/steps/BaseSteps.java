@@ -89,7 +89,8 @@ public abstract class BaseSteps {
     /**
      *
      * @param webElement
-     * @return
+     * @return if the element is not visible, return empty string. If there is a value of the attribute 'value',
+     * return it. If there is a value for webElement.getText, return it. Else, return empty string.
      */
     protected String read(WebElement webElement) {
         String text;
@@ -142,8 +143,8 @@ public abstract class BaseSteps {
 
     /**
      *
-     * @param webElement
-     * @param message
+     * @param webElement A reference to the WebElement
+     * @param message the message or keystrokes
      */
     protected void sendKeys(WebElement webElement, CharSequence message) {
 
@@ -205,7 +206,7 @@ public abstract class BaseSteps {
 
     /**
      *
-     * @param webElement
+     * @param webElement a reference to the WebElement to be right clicked on
      */
     protected void rightClickOn(WebElement webElement) {
         new Actions(driver).contextClick(webElement).perform();
@@ -214,7 +215,7 @@ public abstract class BaseSteps {
 
     /**
      *
-     * @param webElement
+     * @param webElement a reference to the WebElement to be double clicked on
      */
     protected void doubleClick(WebElement webElement){
         new Actions(driver).doubleClick(webElement).perform();
@@ -222,7 +223,7 @@ public abstract class BaseSteps {
 
     /**
      *
-     * @param webElement
+     * @param webElement a reference to the WebElement that requires a click with JavaScript
      */
     protected void executeJavascriptClick(WebElement webElement){
         JavascriptExecutor executor = (JavascriptExecutor)driver;

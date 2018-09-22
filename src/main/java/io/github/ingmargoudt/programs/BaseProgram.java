@@ -17,7 +17,7 @@ public abstract class BaseProgram {
 
     /**
      *
-     * @param webDriver
+     * @param webDriver an instance of the WebDriver
      */
     public BaseProgram(WebDriver webDriver) {
         this.webDriver = webDriver;

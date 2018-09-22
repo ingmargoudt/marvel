@@ -1,6 +1,5 @@
 package io.github.ingmargoudt.programs;
 
-import org.assertj.core.api.Fail;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
@@ -8,11 +7,10 @@ public class ProgramFactory {
 
 
     /**
-     *
-     * @param clzz
-     * @param webDriver
+     * @param clzz      The Program class to instantiate
+     * @param webDriver A reference to the WebDriver
      * @param <T>
-     * @return
+     * @return an instance of the Program
      */
     public static <T> T create(Class<T> clzz, WebDriver webDriver) {
         if (BaseProgram.class.isAssignableFrom(clzz)) {
