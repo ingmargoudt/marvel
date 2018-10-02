@@ -21,18 +21,18 @@ public class BaseProgramTest {
         assertThat(p.isDisplayed(null)).isFalse();
     }
 
-    @Test
-    public void cantFindWebElementWithNullBy(){
-        webDriver = Mockito.mock(WebDriver.class);
-        EmptyProgram p = new EmptyProgram(webDriver);
-        assertThat(p.get(null)).isNotPresent();
-    }
-
-
-    @Test
-    public void cantFindElementWithNotexistingBy(){
-        webDriver = Mockito.mock(WebDriver.class);
-        EmptyProgram p = new EmptyProgram(webDriver);
-        assertThat(p.get(By.id("the_id"))).isNotPresent();
-    }
+//    @Test
+//    public void cantFindWebElementWithNullBy(){
+//        webDriver = Mockito.mock(WebDriver.class);
+//        EmptyProgram p = new EmptyProgram(webDriver);
+//        assertThat(p.get(null)).isNotPresent();
+//    }
+//
+//
+//    @Test
+//    public void cantFindElementWithNotexistingBy(){
+//        webDriver = Mockito.mock(WebDriver.class);
+//        EmptyProgram p = new EmptyProgram(webDriver);
+//        assertThat(p.get(By.id("the_id"))).isNotPresent();
+//    }
 }

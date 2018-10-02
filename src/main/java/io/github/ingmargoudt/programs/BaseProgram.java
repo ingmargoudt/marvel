@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseProgram {
@@ -33,7 +34,7 @@ public abstract class BaseProgram {
             return false;
         }
         try {
-            WebDriverWait wait = new WebDriverWait(webDriver, 1);
+            WebDriverWait wait = new WebDriverWait(webDriver, explicit_timeout);
             wait.until(ExpectedConditions.visibilityOfElementLocated(by));
             return true;
         } catch (Exception e) {
@@ -41,10 +42,16 @@ public abstract class BaseProgram {
         }
     }
 
-    public Optional<WebElement> get(By by) {
-        if (isDisplayed(by)) {
-            return Optional.of(webDriver.findElement(by));
-        }
-        return Optional.empty();
+    public WebElement get(By by) {
+        WebDriverWait webDriverWait = new WebDriverWait(webDriver, explicit_timeout);
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        return webDriver.findElement(by);
+    }
+
+    public List<WebElement> getList(By by){
+
+        WebDriverWait webDriverWait = new WebDriverWait(webDriver, explicit_timeout);
+        webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
+        return webDriver.findElements(by);
     }
 }
