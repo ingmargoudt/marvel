@@ -1,5 +1,6 @@
 package io.github.ingmargoudt;
 
+import io.github.bonigarcia.wdm.PhantomJsDriverManager;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,16 +10,22 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
+import java.util.Optional;
 
 public abstract class TestExecution {
     protected static final Logger logger = LogManager.getLogger();
@@ -35,18 +42,47 @@ public abstract class TestExecution {
         }
 
         if (!noBrowser) {
-            WebDriverManager.chromedriver().setup();
-
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("start-maximized");
-            webDriver = new ChromeDriver(options);
-
+           defineBrowser();
             prepareTestData();
         }
     }
 
+    private void defineBrowser() {
+       Optional<Method> method =  Arrays.stream(getClass().getMethods())
+                .filter(p-> p.isAnnotationPresent(Browser.class)).findFirst();
+       if(method.isPresent()) {
+           switch (method.get().getAnnotation(Browser.class).value()){
+               case CHROME:
+                   WebDriverManager.chromedriver().setup();
+
+                   ChromeOptions options = new ChromeOptions();
+                   options.addArguments("start-maximized");
+                   webDriver = new ChromeDriver(options);
+                   break;
+               case FIREFOX:
+                   WebDriverManager.firefoxdriver().setup();
+                   webDriver = new FirefoxDriver();
+                   break;
+               case INTERNET_EXPLORER:
+                   WebDriverManager.iedriver().setup();
+                   webDriver = new InternetExplorerDriver();
+                   break;
+               case EDGE:
+                   WebDriverManager.edgedriver().setup();
+                   webDriver = new EdgeDriver();
+                   break;
+               default:
+                   logger.info("no annotation present");
+
+           }
+
+       }
+
+    }
+
     protected void close() {
         if (webDriver != null) {
+            logger.info("Closing down webdriver connection ");
             webDriver.quit();
         }
         logger.info("Finishing test " + getClass().getSimpleName());
