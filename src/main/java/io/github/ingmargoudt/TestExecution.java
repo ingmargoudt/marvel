@@ -44,8 +44,8 @@ public abstract class TestExecution {
 
         if (!noBrowser) {
             defineBrowser();
-            prepareTestData();
         }
+        prepareTestData();
     }
 
     private void defineBrowser() {
