@@ -30,9 +30,9 @@ import java.util.Optional;
 @Getter
 public abstract class TestExecution {
     protected static final Logger logger = LogManager.getLogger();
-    public WebDriver webDriver;
-    public boolean noBrowser;
-    protected String baseURL;
+    private WebDriver webDriver;
+    private boolean noBrowser;
+    private String baseURL;
 
     protected TestExecution() {
 
