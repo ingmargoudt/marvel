@@ -1,7 +1,7 @@
 package io.github.ingmargoudt;
 
-import io.github.bonigarcia.wdm.PhantomJsDriverManager;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
@@ -27,6 +27,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.Optional;
 
+@Getter
 public abstract class TestExecution {
     protected static final Logger logger = LogManager.getLogger();
     public WebDriver webDriver;
@@ -42,41 +43,41 @@ public abstract class TestExecution {
         }
 
         if (!noBrowser) {
-           defineBrowser();
+            defineBrowser();
             prepareTestData();
         }
     }
 
     private void defineBrowser() {
-       Optional<Method> method =  Arrays.stream(getClass().getMethods())
-                .filter(p-> p.isAnnotationPresent(Browser.class)).findFirst();
-       if(method.isPresent()) {
-           switch (method.get().getAnnotation(Browser.class).value()){
-               case CHROME:
-                   WebDriverManager.chromedriver().setup();
+        Optional<Method> method = Arrays.stream(getClass().getMethods())
+                .filter(p -> p.isAnnotationPresent(Browser.class)).findFirst();
+        if (method.isPresent()) {
+            switch (method.get().getAnnotation(Browser.class).value()) {
+                case CHROME:
+                    WebDriverManager.chromedriver().setup();
 
-                   ChromeOptions options = new ChromeOptions();
-                   options.addArguments("start-maximized");
-                   webDriver = new ChromeDriver(options);
-                   break;
-               case FIREFOX:
-                   WebDriverManager.firefoxdriver().setup();
-                   webDriver = new FirefoxDriver();
-                   break;
-               case INTERNET_EXPLORER:
-                   WebDriverManager.iedriver().setup();
-                   webDriver = new InternetExplorerDriver();
-                   break;
-               case EDGE:
-                   WebDriverManager.edgedriver().setup();
-                   webDriver = new EdgeDriver();
-                   break;
-               default:
-                   logger.info("no annotation present");
+                    ChromeOptions options = new ChromeOptions();
+                    options.addArguments("start-maximized");
+                    webDriver = new ChromeDriver(options);
+                    break;
+                case FIREFOX:
+                    WebDriverManager.firefoxdriver().setup();
+                    webDriver = new FirefoxDriver();
+                    break;
+                case INTERNET_EXPLORER:
+                    WebDriverManager.iedriver().setup();
+                    webDriver = new InternetExplorerDriver();
+                    break;
+                case EDGE:
+                    WebDriverManager.edgedriver().setup();
+                    webDriver = new EdgeDriver();
+                    break;
+                default:
+                    logger.info("no annotation present");
 
-           }
+            }
 
-       }
+        }
 
     }
 
