@@ -24,7 +24,6 @@ public abstract class BaseSteps {
 
 
     /**
-     *
      * @param webDriver
      */
     protected BaseSteps(WebDriver webDriver) {
@@ -52,7 +51,6 @@ public abstract class BaseSteps {
     }
 
     /**
-     *
      * @param webElement
      * @return
      */
@@ -70,7 +68,6 @@ public abstract class BaseSteps {
     }
 
     /**
-     *
      * @param webElement
      * @return
      */
@@ -87,7 +84,6 @@ public abstract class BaseSteps {
 
 
     /**
-     *
      * @param webElement
      * @return if the element is not visible, return empty string. If there is a value of the attribute 'value',
      * return it. If there is a value for webElement.getText, return it. Else, return empty string.
@@ -121,7 +117,6 @@ public abstract class BaseSteps {
     }
 
     /**
-     *
      * @param webElement
      * @param value
      */
@@ -131,20 +126,18 @@ public abstract class BaseSteps {
 
 
     /**
-     *
      * @param webElement
      * @param message
      */
     protected void write(WebElement webElement, String message) {
 
-       sendKeys(webElement, message);
+        sendKeys(webElement, message);
 
     }
 
     /**
-     *
      * @param webElement A reference to the WebElement
-     * @param message the message or keystrokes
+     * @param message    the message or keystrokes
      */
     protected void sendKeys(WebElement webElement, CharSequence message) {
 
@@ -154,9 +147,27 @@ public abstract class BaseSteps {
         webElement.sendKeys(message);
     }
 
+    /**
+     * @param webElement
+     */
+    protected void submit(WebElement webElement) {
+        new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.visibilityOf(webElement));
+        new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.elementToBeClickable(webElement));
+
+        webElement.submit();
+    }
 
     /**
-     *
+     * @param webElement
+     */
+    protected void clear(WebElement webElement) {
+        new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.visibilityOf(webElement));
+        new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.elementToBeClickable(webElement));
+        webElement.clear();
+    }
+
+
+    /**
      * @param webElement
      */
     protected void clickOn(WebElement webElement) {
@@ -168,7 +179,6 @@ public abstract class BaseSteps {
     }
 
     /**
-     *
      * @param webElement
      */
     protected void clickAndClose(WebElement webElement) {
@@ -180,7 +190,6 @@ public abstract class BaseSteps {
 
 
     /**
-     *
      * @param element
      * @param color
      */
@@ -205,7 +214,6 @@ public abstract class BaseSteps {
 
 
     /**
-     *
      * @param webElement a reference to the WebElement to be right clicked on
      */
     protected void rightClickOn(WebElement webElement) {
@@ -214,19 +222,17 @@ public abstract class BaseSteps {
 
 
     /**
-     *
      * @param webElement a reference to the WebElement to be double clicked on
      */
-    protected void doubleClick(WebElement webElement){
+    protected void doubleClick(WebElement webElement) {
         new Actions(driver).doubleClick(webElement).perform();
     }
 
     /**
-     *
      * @param webElement a reference to the WebElement that requires a click with JavaScript
      */
-    protected void executeJavascriptClick(WebElement webElement){
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
+    protected void executeJavascriptClick(WebElement webElement) {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", webElement);
 
     }
