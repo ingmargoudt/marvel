@@ -2,6 +2,7 @@ package io.github.ingmargoudt;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
@@ -30,8 +31,9 @@ import java.util.Optional;
 @Getter
 public abstract class TestExecution {
     protected static final Logger logger = LogManager.getLogger();
-    private WebDriver webDriver;
+    protected WebDriver webDriver;
     private boolean noBrowser;
+    @Setter
     private String baseURL;
 
     protected TestExecution() {
@@ -119,6 +121,14 @@ public abstract class TestExecution {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    protected void openURL() {
+        webDriver.get(baseURL);
+    }
+
+    protected void openURL(String url) {
+        webDriver.get(url);
     }
 
 
