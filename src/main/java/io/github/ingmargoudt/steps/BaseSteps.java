@@ -73,7 +73,6 @@ public abstract class BaseSteps {
      */
     protected boolean isNotDisplayed(WebElement webElement) {
         try {
-
             WebDriverWait wait = new WebDriverWait(driver, 1);
             wait.until(ExpectedConditions.invisibilityOf(webElement));
             return true;
@@ -140,10 +139,7 @@ public abstract class BaseSteps {
      * @param message    the message or keystrokes
      */
     protected void sendKeys(WebElement webElement, CharSequence message) {
-
-        new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.visibilityOf(webElement));
-        new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.elementToBeClickable(webElement));
-
+        waitForWebElementToBeVisible(webElement);
         webElement.sendKeys(message);
     }
 
@@ -151,9 +147,7 @@ public abstract class BaseSteps {
      * @param webElement
      */
     protected void submit(WebElement webElement) {
-        new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.visibilityOf(webElement));
-        new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.elementToBeClickable(webElement));
-
+        waitForWebElementToBeVisible(webElement);
         webElement.submit();
     }
 
@@ -171,8 +165,7 @@ public abstract class BaseSteps {
      * @param webElement
      */
     protected void clickOn(WebElement webElement) {
-        new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.visibilityOf(webElement));
-        new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.elementToBeClickable(webElement));
+        waitForWebElementToBeVisible(webElement);
         highlightElement(webElement, CLICK_COLOR);
         webElement.click();
 
@@ -235,6 +228,11 @@ public abstract class BaseSteps {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", webElement);
 
+    }
+
+    private void waitForWebElementToBeVisible(WebElement webElement) {
+        new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.visibilityOf(webElement));
+        new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.elementToBeClickable(webElement));
     }
 }
 
