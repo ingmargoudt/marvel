@@ -1,8 +1,6 @@
-import io.github.ingmargoudt.programs.BaseProgram;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import static org.assertj.core.api.Assertions.assertThat;

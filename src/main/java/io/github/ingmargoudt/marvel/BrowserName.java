@@ -1,4 +1,4 @@
-package io.github.ingmargoudt;
+package io.github.ingmargoudt.marvel;
 
 public enum BrowserName {
     CHROME,

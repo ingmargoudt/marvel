@@ -1,4 +1,4 @@
-package io.github.ingmargoudt.steps;
+package io.github.ingmargoudt.marvel.steps;
 
 import lombok.extern.log4j.Log4j2;
 import net.sf.cglib.proxy.Enhancer;

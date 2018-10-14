@@ -1,4 +1,4 @@
-package io.github.ingmargoudt;
+package io.github.ingmargoudt.marvel;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.Getter;

@@ -1,7 +1,7 @@
-package io.github.ingmargoudt;
+package io.github.ingmargoudt.marvel;
 
-import io.github.ingmargoudt.steps.StepFactory;
-import io.github.ingmargoudt.steps.Steps;
+import io.github.ingmargoudt.marvel.steps.StepFactory;
+import io.github.ingmargoudt.marvel.steps.Steps;
 import org.openqa.selenium.WebDriver;
 
 import java.lang.reflect.Field;

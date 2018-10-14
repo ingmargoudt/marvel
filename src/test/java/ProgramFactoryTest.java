@@ -1,4 +1,4 @@
-import io.github.ingmargoudt.programs.ProgramFactory;
+import io.github.ingmargoudt.marvel.programs.ProgramFactory;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;

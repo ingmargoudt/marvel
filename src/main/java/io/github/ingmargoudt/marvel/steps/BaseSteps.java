@@ -1,7 +1,7 @@
-package io.github.ingmargoudt.steps;
+package io.github.ingmargoudt.marvel.steps;
 
-import io.github.ingmargoudt.programs.Program;
-import io.github.ingmargoudt.programs.ProgramFactory;
+import io.github.ingmargoudt.marvel.programs.Program;
+import io.github.ingmargoudt.marvel.programs.ProgramFactory;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
