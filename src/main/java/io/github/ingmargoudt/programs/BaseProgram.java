@@ -26,32 +26,32 @@ public abstract class BaseProgram {
 
     /**
      *
-     * @param by
-     * @return
+     * @param locator
+     * @return boolean
      */
-    public boolean isDisplayed(By by) {
-        if (by == null) {
+    public boolean isDisplayed(By locator) {
+        if (locator == null) {
             return false;
         }
         try {
             WebDriverWait wait = new WebDriverWait(webDriver, explicit_timeout);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
             return true;
         } catch (Exception e) {
             return false;
         }
     }
 
-    public WebElement get(By by) {
+    public WebElement get(By locator) {
         WebDriverWait webDriverWait = new WebDriverWait(webDriver, explicit_timeout);
-        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(by));
-        return webDriver.findElement(by);
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        return webDriver.findElement(locator);
     }
 
-    public List<WebElement> getList(By by){
+    public List<WebElement> getList(By locator){
 
         WebDriverWait webDriverWait = new WebDriverWait(webDriver, explicit_timeout);
-        webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
-        return webDriver.findElements(by);
+        webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+        return webDriver.findElements(locator);
     }
 }

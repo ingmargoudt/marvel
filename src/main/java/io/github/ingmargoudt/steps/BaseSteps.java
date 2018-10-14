@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 @Log4j2
 public abstract class BaseSteps {
@@ -88,6 +89,7 @@ public abstract class BaseSteps {
      * return it. If there is a value for webElement.getText, return it. Else, return empty string.
      */
     protected String read(WebElement webElement) {
+        Objects.requireNonNull(webElement, "parameter of type WebElement can not be null");
         String text;
 
         try {

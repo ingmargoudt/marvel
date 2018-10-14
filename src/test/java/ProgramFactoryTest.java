@@ -25,4 +25,17 @@ public class ProgramFactoryTest {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> ProgramFactory.create(Integer.class, webDriver));
 
     }
+
+    @Test
+    public void testNullDriver(){
+    assertThatExceptionOfType(NullPointerException.class)
+            .isThrownBy(() -> ProgramFactory.create(EmptyProgram.class, null));
+    }
+
+    @Test
+    public void testNullClzz(){
+        webDriver = Mockito.mock(WebDriver.class);
+        assertThatExceptionOfType(NullPointerException.class)
+                .isThrownBy(() -> ProgramFactory.create(null, webDriver));
+    }
 }
