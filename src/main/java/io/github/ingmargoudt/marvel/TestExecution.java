@@ -32,7 +32,6 @@ import java.util.Optional;
 public abstract class TestExecution {
     protected static final Logger logger = LogManager.getLogger();
     protected WebDriver webDriver;
-    private boolean noBrowser;
     @Setter
     private String baseURL;
 
@@ -44,9 +43,7 @@ public abstract class TestExecution {
             logger.warn("There is no config.json found for " + env);
         }
 
-        if (!noBrowser) {
-            defineBrowser();
-        }
+        defineBrowser();
         prepareTestData();
     }
 
@@ -57,7 +54,6 @@ public abstract class TestExecution {
             switch (method.get().getAnnotation(Browser.class).value()) {
                 case CHROME:
                     WebDriverManager.chromedriver().setup();
-
                     ChromeOptions options = new ChromeOptions();
                     options.addArguments("start-maximized");
                     webDriver = new ChromeDriver(options);
