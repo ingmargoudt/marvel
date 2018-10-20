@@ -1,5 +1,7 @@
 package io.github.ingmargoudt.marvel.programs;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,18 +15,20 @@ public abstract class BaseProgram {
 
     public static int explicit_timeout = 30;
     protected final WebDriver webDriver;
+    @Setter
+    @Getter
+    WebDriverWait wait;
 
 
     /**
-     *
      * @param webDriver an instance of the WebDriver
      */
     public BaseProgram(WebDriver webDriver) {
         this.webDriver = webDriver;
+        wait = new WebDriverWait(webDriver, explicit_timeout);
     }
 
     /**
-     *
      * @param locator
      * @return boolean
      */
@@ -33,7 +37,6 @@ public abstract class BaseProgram {
             return false;
         }
         try {
-            WebDriverWait wait = new WebDriverWait(webDriver, explicit_timeout);
             wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
             return true;
         } catch (Exception e) {
@@ -42,15 +45,16 @@ public abstract class BaseProgram {
     }
 
     public WebElement get(By locator) {
-        WebDriverWait webDriverWait = new WebDriverWait(webDriver, explicit_timeout);
-        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        if (locator == null) {
+            throw new NullPointerException("locator can not be null");
+        }
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         return webDriver.findElement(locator);
     }
 
-    public List<WebElement> getList(By locator){
+    public List<WebElement> getList(By locator) {
 
-        WebDriverWait webDriverWait = new WebDriverWait(webDriver, explicit_timeout);
-        webDriverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
         return webDriver.findElements(locator);
     }
 }
