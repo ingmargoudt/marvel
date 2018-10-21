@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -43,6 +45,11 @@ public abstract class TestExecution {
             logger.warn("There is no config.json found for " + env);
         }
 
+    }
+
+    @BeforeEach
+    private void setup(){
+
         defineBrowser();
         prepareTestData();
     }
@@ -77,6 +84,11 @@ public abstract class TestExecution {
 
         }
 
+    }
+
+    @AfterEach
+    private void cooldown(){
+        close();
     }
 
     protected void close() {
