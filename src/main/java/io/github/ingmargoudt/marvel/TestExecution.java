@@ -28,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.stream.Stream;
 
 @Getter
 public abstract class TestExecution {
@@ -59,28 +60,30 @@ public abstract class TestExecution {
     }
 
     private void defineBrowser(Method method) {
-        switch (method.getAnnotation(Browser.class).value()) {
-            case CHROME:
-                WebDriverManager.chromedriver().setup();
-                ChromeOptions options = new ChromeOptions();
-                options.addArguments("start-maximized");
-                webDriver = new ChromeDriver(options);
-                break;
-            case FIREFOX:
-                WebDriverManager.firefoxdriver().setup();
-                webDriver = new FirefoxDriver();
-                break;
-            case INTERNET_EXPLORER:
-                WebDriverManager.iedriver().setup();
-                webDriver = new InternetExplorerDriver();
-                break;
-            case EDGE:
-                WebDriverManager.edgedriver().setup();
-                webDriver = new EdgeDriver();
-                break;
-            default:
-                logger.info("no annotation present");
+        if(method.isAnnotationPresent(Browser.class)) {
+            switch (method.getAnnotation(Browser.class).value()) {
+                case CHROME:
+                    WebDriverManager.chromedriver().setup();
+                    ChromeOptions options = new ChromeOptions();
+                    options.addArguments("start-maximized");
+                    webDriver = new ChromeDriver(options);
+                    break;
+                case FIREFOX:
+                    WebDriverManager.firefoxdriver().setup();
+                    webDriver = new FirefoxDriver();
+                    break;
+                case INTERNET_EXPLORER:
+                    WebDriverManager.iedriver().setup();
+                    webDriver = new InternetExplorerDriver();
+                    break;
+                case EDGE:
+                    WebDriverManager.edgedriver().setup();
+                    webDriver = new EdgeDriver();
+                    break;
+                default:
+                    logger.info("Unknown browser");
 
+            }
         }
 
     }
