@@ -20,16 +20,14 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Properties;
 
 @Getter
 public abstract class TestExecution {
@@ -37,13 +35,22 @@ public abstract class TestExecution {
     protected WebDriver webDriver;
     @Setter
     private String baseURL;
+    private Properties properties;
 
     protected TestExecution() {
 
         String env = System.getProperty("environment", "test");
-        URL resource = this.getClass().getClassLoader().getResource(env + "/config.json");
+        URL resource = this.getClass().getClassLoader().getResource(env + "/config.properties");
         if (resource == null) {
-            logger.warn("There is no config.json found for " + env);
+            logger.warn("There is no config.properties found for " + env);
+        }
+        else{
+            try(InputStream is = new FileInputStream(resource.getPath())) {
+                properties = new Properties();
+                properties.load(is);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }

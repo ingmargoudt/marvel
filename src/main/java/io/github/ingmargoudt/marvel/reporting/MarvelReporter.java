@@ -18,6 +18,6 @@ public class MarvelReporter {
     }
 
     public static void generateReport() {
-       
+
     }
 }
