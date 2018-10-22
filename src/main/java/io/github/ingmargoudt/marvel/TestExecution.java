@@ -99,22 +99,18 @@ public abstract class TestExecution {
 
     @AfterEach
     private void cooldown(TestInfo testInfo) {
-        close();
+        if (webDriver != null) {
+            logger.info("Closing down webdriver connection ");
+            webDriver.quit();
+        }
+        logger.info("Finishing test " + testInfo.getDisplayName());
+        logger.info("-------------------------------------------------------");
 
     }
 
     @AfterAll
     private static void report(){
         MarvelReporter.generateReport();
-    }
-
-    protected void close() {
-        if (webDriver != null) {
-            logger.info("Closing down webdriver connection ");
-            webDriver.quit();
-        }
-        logger.info("Finishing test " + getClass().getSimpleName());
-        logger.info("-------------------------------------------------------");
     }
 
     protected void takeScreenshot() {
