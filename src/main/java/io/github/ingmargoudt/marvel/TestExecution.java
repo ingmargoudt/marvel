@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -27,8 +28,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
-import java.util.Optional;
 
 @Getter
 public abstract class TestExecution {
@@ -48,46 +47,47 @@ public abstract class TestExecution {
     }
 
     @BeforeEach
-    private void setup(){
-
-        defineBrowser();
+    private void setup(TestInfo testInfo) {
+        logger.info(testInfo.getDisplayName());
+        if(!testInfo.getTags().isEmpty()) {
+            logger.info("tags : " + testInfo.getTags());
+        }
+        if (testInfo.getTestMethod().isPresent()) {
+            defineBrowser(testInfo.getTestMethod().get());
+        }
         prepareTestData();
     }
 
-    private void defineBrowser() {
-        Optional<Method> method = Arrays.stream(getClass().getMethods())
-                .filter(p -> p.isAnnotationPresent(Browser.class)).findFirst();
-        if (method.isPresent()) {
-            switch (method.get().getAnnotation(Browser.class).value()) {
-                case CHROME:
-                    WebDriverManager.chromedriver().setup();
-                    ChromeOptions options = new ChromeOptions();
-                    options.addArguments("start-maximized");
-                    webDriver = new ChromeDriver(options);
-                    break;
-                case FIREFOX:
-                    WebDriverManager.firefoxdriver().setup();
-                    webDriver = new FirefoxDriver();
-                    break;
-                case INTERNET_EXPLORER:
-                    WebDriverManager.iedriver().setup();
-                    webDriver = new InternetExplorerDriver();
-                    break;
-                case EDGE:
-                    WebDriverManager.edgedriver().setup();
-                    webDriver = new EdgeDriver();
-                    break;
-                default:
-                    logger.info("no annotation present");
-
-            }
+    private void defineBrowser(Method method) {
+        switch (method.getAnnotation(Browser.class).value()) {
+            case CHROME:
+                WebDriverManager.chromedriver().setup();
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("start-maximized");
+                webDriver = new ChromeDriver(options);
+                break;
+            case FIREFOX:
+                WebDriverManager.firefoxdriver().setup();
+                webDriver = new FirefoxDriver();
+                break;
+            case INTERNET_EXPLORER:
+                WebDriverManager.iedriver().setup();
+                webDriver = new InternetExplorerDriver();
+                break;
+            case EDGE:
+                WebDriverManager.edgedriver().setup();
+                webDriver = new EdgeDriver();
+                break;
+            default:
+                logger.info("no annotation present");
 
         }
 
     }
 
+
     @AfterEach
-    private void cooldown(){
+    private void cooldown() {
         close();
     }
 
