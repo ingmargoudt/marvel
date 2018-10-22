@@ -1,5 +1,7 @@
 package io.github.ingmargoudt.marvel.steps;
 
+import io.github.ingmargoudt.marvel.reporting.MarvelReporter;
+import io.github.ingmargoudt.marvel.reporting.StepResult;
 import lombok.extern.log4j.Log4j2;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
@@ -26,6 +28,7 @@ public class StepFactory {
             if (method.isAnnotationPresent(Step.class)) {
                 if (method.getDeclaringClass() != Object.class) {
                     logger.info(method.getDeclaringClass().getSimpleName() + " - " + method.getName() + " " + Arrays.stream(args).filter(p -> p.getClass() != Class.class).map(Object::toString).collect(Collectors.joining(", ")));
+                    MarvelReporter.logStep("foo", new StepResult());
                 }
 
             }

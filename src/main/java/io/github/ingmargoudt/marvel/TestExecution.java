@@ -1,11 +1,13 @@
 package io.github.ingmargoudt.marvel;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.github.ingmargoudt.marvel.reporting.MarvelReporter;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
@@ -28,7 +30,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.stream.Stream;
 
 @Getter
 public abstract class TestExecution {
@@ -90,8 +91,14 @@ public abstract class TestExecution {
 
 
     @AfterEach
-    private void cooldown() {
+    private void cooldown(TestInfo testInfo) {
         close();
+
+    }
+
+    @AfterAll
+    private static void report(){
+        MarvelReporter.generateReport();
     }
 
     protected void close() {
