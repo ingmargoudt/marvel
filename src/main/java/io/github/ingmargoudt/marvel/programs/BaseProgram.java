@@ -53,7 +53,9 @@ public abstract class BaseProgram {
     }
 
     public List<WebElement> getList(By locator) {
-
+        if (locator == null) {
+            throw new NullPointerException("locator can not be null");
+        }
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
         return webDriver.findElements(locator);
     }
