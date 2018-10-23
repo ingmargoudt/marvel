@@ -249,12 +249,10 @@ public abstract class BaseSteps {
         System.out.println(script);
         String selectorFrom = "#" + from.toString().split(":")[1].trim();
         String selectorTo = "#" + to.toString().split(":")[1].trim();
-        executor.executeScript(script + "$('" + selectorFrom + "').simulateDragDrop({ dropTarget: '"+selectorTo+"'});");
+        executor.executeScript(script + "$('" + selectorFrom + "').simulateDragDrop({ dropTarget: '" + selectorTo + "'});");
     }
 
     private String getDragAndDropScript() {
-
-        //File file = new File(BaseSteps.class.getClassLoader().getResource(fileName).getFile());
         try (InputStream inputStream = BaseSteps.class.getClassLoader().getResourceAsStream("dnd.js")) {
             return new BufferedReader(new InputStreamReader(inputStream))
                     .lines().collect(Collectors.joining("\n"));
