@@ -3,6 +3,7 @@ package io.github.ingmargoudt.marvel.steps;
 import io.github.ingmargoudt.marvel.programs.Program;
 import io.github.ingmargoudt.marvel.programs.ProgramFactory;
 import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,8 +11,13 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Log4j2
 public abstract class BaseSteps {
@@ -236,6 +242,25 @@ public abstract class BaseSteps {
         new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.visibilityOf(webElement));
         new WebDriverWait(driver, explicit_timeout).until(ExpectedConditions.elementToBeClickable(webElement));
     }
+
+    public void dragAndDropJQuery(final By from, final By to) {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        String script = getDragAndDropScript();
+        System.out.println(script);
+        String selectorFrom = "#" + from.toString().split(":")[1].trim();
+        String selectorTo = "#" + to.toString().split(":")[1].trim();
+        executor.executeScript(script + "$('" + selectorFrom + "').simulateDragDrop({ dropTarget: '"+selectorTo+"'});");
+    }
+
+    private String getDragAndDropScript() {
+
+        //File file = new File(BaseSteps.class.getClassLoader().getResource(fileName).getFile());
+        try (InputStream inputStream = BaseSteps.class.getClassLoader().getResourceAsStream("dnd.js")) {
+            return new BufferedReader(new InputStreamReader(inputStream))
+                    .lines().collect(Collectors.joining("\n"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }
-
-
