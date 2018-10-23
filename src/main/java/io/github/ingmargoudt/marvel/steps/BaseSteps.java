@@ -244,6 +244,12 @@ public abstract class BaseSteps {
     }
 
     public void dragAndDropJQuery(final By from, final By to) {
+        if(!from.toString().split(":")[0].contains("id")){
+            throw new IllegalArgumentException("The from locator must be a By.id");
+        }
+        if(!to.toString().split(":")[0].contains("id")){
+            throw new IllegalArgumentException("The to locator must be a By.id");
+        }
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         String script = getDragAndDropScript();
         System.out.println(script);
