@@ -23,6 +23,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import java.io.*;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -135,7 +136,7 @@ public abstract class TestExecution {
         }
         try {
             Path temp = Files.createFile(Paths.get("target/" + this.getClass().getSimpleName() + "_" + DateTime.now().getMillis() + "_DOM.txt"));
-            BufferedWriter bw = new BufferedWriter(new FileWriter(temp.toFile()));
+            BufferedWriter bw = new BufferedWriter(Files.newBufferedWriter(temp, Charset.defaultCharset()));
             bw.write(webDriver.getPageSource());
             logger.info("writing " + temp.toString());
             bw.close();
