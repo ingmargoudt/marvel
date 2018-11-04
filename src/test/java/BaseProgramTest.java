@@ -20,7 +20,7 @@ public class BaseProgramTest {
 
 
     @Test
-    public void TestNullBy() {
+    public void isDisplayedWithANullBy() {
         webDriver = Mockito.mock(WebDriver.class);
         EmptyProgram p = new EmptyProgram(webDriver);
         assertThat(p.isDisplayed(null)).isFalse();
