@@ -252,7 +252,6 @@ public abstract class BaseSteps {
         }
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         String script = getDragAndDropScript();
-        System.out.println(script);
         String selectorFrom = "#" + from.toString().split(":")[1].trim();
         String selectorTo = "#" + to.toString().split(":")[1].trim();
         executor.executeScript(script + "$('" + selectorFrom + "').simulateDragDrop({ dropTarget: '" + selectorTo + "'});");
