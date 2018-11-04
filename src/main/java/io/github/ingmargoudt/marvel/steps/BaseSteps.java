@@ -259,9 +259,10 @@ public abstract class BaseSteps {
 
     private String getDragAndDropScript() {
         try (InputStream inputStream = BaseSteps.class.getClassLoader().getResourceAsStream("dnd.js")) {
-            return new BufferedReader(new InputStreamReader(inputStream))
-                    .lines().collect(Collectors.joining("\n"));
-        } catch (IOException e) {
+            try(BufferedReader bfr = new BufferedReader(new InputStreamReader(inputStream))){
+                return bfr.lines().collect(Collectors.joining("\n"));
+            }
+          } catch (IOException e) {
             e.printStackTrace();
         }
         return "";
