@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/ingmargoudt/marvel.svg?branch=master)](https://travis-ci.org/ingmargoudt/marvel)
 # marvel
 A simple Test Automation toolkit for Selenium
 
