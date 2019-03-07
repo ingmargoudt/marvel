@@ -1,5 +1,6 @@
 package io.github.ingmargoudt.marvel;
 
+import lombok.experimental.UtilityClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+@UtilityClass
 public class BrokenLinksChecker {
 
     public static List<String> findBrokenLinks(WebDriver webDriver) {
