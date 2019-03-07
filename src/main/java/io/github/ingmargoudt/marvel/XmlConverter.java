@@ -1,6 +1,8 @@
 package io.github.ingmargoudt.marvel;
 
 
+import lombok.experimental.UtilityClass;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -8,6 +10,7 @@ import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+@UtilityClass
 public class XmlConverter {
 
     public static String toXml(Object o) {
