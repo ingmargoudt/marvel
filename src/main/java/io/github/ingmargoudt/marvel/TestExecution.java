@@ -4,8 +4,10 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.ingmargoudt.marvel.reporting.MarvelReporter;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.assertj.core.api.Fail;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -19,9 +21,11 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.*;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -44,9 +48,8 @@ public abstract class TestExecution {
         URL resource = this.getClass().getClassLoader().getResource(env + "/config.properties");
         if (resource == null) {
             logger.warn("There is no config.properties found for " + env);
-        }
-        else{
-            try(InputStream is = new FileInputStream(resource.getPath())) {
+        } else {
+            try (InputStream is = new FileInputStream(resource.getPath())) {
                 properties = new Properties();
                 properties.load(is);
             } catch (IOException e) {
@@ -59,17 +62,46 @@ public abstract class TestExecution {
     @BeforeEach
     private void setup(TestInfo testInfo) {
         logger.info(testInfo.getDisplayName());
-        if(!testInfo.getTags().isEmpty()) {
+        if (!testInfo.getTags().isEmpty()) {
             logger.info("tags : " + testInfo.getTags());
         }
-        if (testInfo.getTestMethod().isPresent()) {
-            defineBrowser(testInfo.getTestMethod().get());
-        }
+        testInfo.getTestMethod().ifPresent(testMethod -> {
+            if (!Boolean.parseBoolean(System.getProperty("grid", "false"))) {
+                defineBrowser(testMethod);
+            } else {
+                try {
+                    determineGridWebDriver(testMethod);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    Fail.fail("URI is malformed ");
+                }
+            }
+        });
         prepareTestData();
     }
 
-    private void defineBrowser(Method method) {
-        if(method.isAnnotationPresent(Browser.class)) {
+    protected void determineGridWebDriver(Method method) throws MalformedURLException {
+        String gridURL = properties.getProperty("gridURL");
+        if(StringUtils.isBlank(gridURL)){
+            Fail.fail("grid URL is not configured in properties");
+        }
+        switch (method.getAnnotation(Browser.class).value()) {
+            case CHROME:
+                WebDriverManager.chromedriver().setup();
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("start-maximized");
+                webDriver = new RemoteWebDriver( new URL(gridURL), options);
+                break;
+
+            default:
+                Fail.fail("Unknown browser");
+
+        }
+    }
+
+
+    protected void defineBrowser(Method method) {
+        if (method.isAnnotationPresent(Browser.class)) {
             switch (method.getAnnotation(Browser.class).value()) {
                 case CHROME:
                     WebDriverManager.chromedriver().setup();
@@ -110,7 +142,7 @@ public abstract class TestExecution {
     }
 
     @AfterAll
-    private static void report(){
+    private static void report() {
         MarvelReporter.generateReport();
     }
 
