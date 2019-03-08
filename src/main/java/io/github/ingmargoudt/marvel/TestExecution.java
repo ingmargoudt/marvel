@@ -45,17 +45,13 @@ public abstract class TestExecution {
     protected TestExecution() {
 
         String env = System.getProperty("environment", "test");
-        URL resource = this.getClass().getClassLoader().getResource(env + "/config.properties");
-        if (resource == null) {
-            logger.warn("There is no config.properties found for " + env);
-        } else {
-            try (InputStream is = new FileInputStream(resource.getPath())) {
-                properties = new Properties();
-                properties.load(is);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(env + "/config.properties")) {
+            properties = new Properties();
+            properties.load(is);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
 
     }
 
@@ -82,7 +78,7 @@ public abstract class TestExecution {
 
     protected void determineGridWebDriver(Method method) throws MalformedURLException {
         String gridURL = properties.getProperty("gridURL");
-        if(StringUtils.isBlank(gridURL)){
+        if (StringUtils.isBlank(gridURL)) {
             Fail.fail("grid URL is not configured in properties");
         }
         switch (method.getAnnotation(Browser.class).value()) {
@@ -90,7 +86,7 @@ public abstract class TestExecution {
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("start-maximized");
-                webDriver = new RemoteWebDriver( new URL(gridURL), options);
+                webDriver = new RemoteWebDriver(new URL(gridURL), options);
                 break;
 
             default:
