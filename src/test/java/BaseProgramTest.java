@@ -8,6 +8,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
@@ -59,5 +62,19 @@ public class BaseProgramTest {
         when(p.getWait().until(null)).thenReturn(true);
         when(webDriver.findElement(By.id("the_id"))).thenReturn(mockElement);
         assertThat(p.get(By.id("the_id"))).isEqualTo(mockElement);
+    }
+
+    @Test
+    public void canFindElements() {
+        webDriver = Mockito.mock(WebDriver.class);
+        EmptyProgram p = new EmptyProgram(webDriver);
+        p.setWait(mock(WebDriverWait.class));
+
+        WebElement mockElement = mock(WebElement.class);
+        List<WebElement> returns = new ArrayList<>();
+        returns.add(mockElement);
+        when(p.getWait().until(null)).thenReturn(true);
+        when(webDriver.findElements(By.className("the_class"))).thenReturn(returns);
+        assertThat(p.getList(By.className("the_class"))).isEqualTo(returns);
     }
 }
