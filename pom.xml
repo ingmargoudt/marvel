@@ -14,7 +14,7 @@
         <log4j.version>2.11.1</log4j.version>
         <cglib.version>3.2.7</cglib.version>
         <lombok.version>1.18.2</lombok.version>
-        <webdrivermanager.version>3.0.0</webdrivermanager.version>
+        <webdrivermanager.version>3.6.0</webdrivermanager.version>
         <joda-time.version>2.10</joda-time.version>
         <!-- test -->
         <junit-jupiter.version>5.4.0</junit-jupiter.version>
